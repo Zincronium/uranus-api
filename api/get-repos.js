@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   try {
     await client.connect();
     // Force target the 'uranus' database
-    const database = client.db('uranus'); 
+    const database = client.db('uranus_office'); 
     const collection = database.collection('repos'); // Ensure this collection name is correct!
     
     const data = await collection.find({}).toArray();
