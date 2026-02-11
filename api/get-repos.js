@@ -1,15 +1,29 @@
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
 
-module.exports = async (req, res) => {
-  const client = new MongoClient(process.env.MONGODB_URI);
+const uri = process.env.MONGODB_URI || "mongodb+srv://firstAdmin:domydomy210@uranus.4lpogeu.mongodb.net/?appName=uranus";
+const client = new MongoClient(uri);
+
+export default async function handler(req, res) {
+  // CORS Headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') return res.status(200).end();
+
   try {
     await client.connect();
-    const database = client.db('uranus_office');
-    const repos = await database.collection('repos').find({}).toArray();
-    res.status(200).json(repos);
+    // Force target the 'uranus' database
+    const database = client.db('uranus'); 
+    const collection = database.collection('repos'); // Ensure this collection name is correct!
+    
+    const data = await collection.find({}).toArray();
+    
+    return res.status(200).json(data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    return res.status(500).json({ error: error.message });
   } finally {
     await client.close();
   }
-};
+}
