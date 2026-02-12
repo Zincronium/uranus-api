@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
     try {
         const client = await clientPromise;
-        const db = client.db("your_db_name"); // Ensure this matches your Atlas DB name
+        const db = client.db("uranus_office"); // Ensure this matches your Atlas DB name
         const result = await db.collection("repos").insertOne(req.body);
         
         return res.status(200).json({ success: true, id: result.insertedId });
