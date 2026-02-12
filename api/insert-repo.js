@@ -2,8 +2,11 @@ import clientPromise from '../lib/mongodb';
 
 export default async function handler(req, res) {
     // 1. SET CORS HEADERS IMMEDIATELY
+    const origin = req.headers.origin;
+
+    // 2. Set headers dynamically based on the incoming request
     res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins
+    res.setHeader('Access-Control-Allow-Origin', origin || '*'); // Echo the origin back
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
     res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
