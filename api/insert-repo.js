@@ -1,4 +1,4 @@
-import clientPromise from '../lib/mongodb';
+import clientPromise from '../lib/libmongodb';
 
 export default async function handler(req, res) {
     // 1. SET CORS HEADERS IMMEDIATELY
